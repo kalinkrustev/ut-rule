@@ -96,7 +96,7 @@ BEGIN
     -- if check credentials has been setup for the account and/or the account product, assign the value to variable. account is with higher priority
     SET @credentialsCheck = CASE WHEN COALESCE (@sourceAccountCheckMask, @sourceProductCheckMask, 0) = 0 THEN NULL ELSE ISNULL (@sourceAccountCheckMask, @sourceProductCheckMask) END
 
-    SELECT @operationDate = ISNULL(@operationDate, GETDATE())
+    SELECT @operationDate = ISNULL(@operationDate, GETUTCDATE())
 
     INSERT INTO
         @totals(transferTypeId, amountDaily, countDaily, amountWeekly, countWeekly, amountMonthly, countMonthly)

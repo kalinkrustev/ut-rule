@@ -5,7 +5,7 @@ AS
     SELECT 'operation' AS resultSetName, 1 single
     SELECT
         n.itemNameId transferTypeId,
-        ISNULL(@operationDateTime, GETDATE()) transferDateTime
+        ISNULL(@operationDateTime, GETUTCDATE()) transferDateTime
     FROM
         [core].[itemName] n
     JOIN
