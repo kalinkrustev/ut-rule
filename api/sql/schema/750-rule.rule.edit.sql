@@ -285,6 +285,15 @@ BEGIN TRY
     COMMIT TRANSACTION
 
     EXEC [rule].[rule.fetch] @conditionId = @conditionId
+    SELECT 'notification' AS resultSetName
+    SELECT
+        c.priority AS rulePriority,
+        GETDATE() AS editDateTime,
+        1 AS multicast,
+        'email' AS channel,
+        'rule.edit' AS template
+    FROM
+        @condition c
 END TRY
 BEGIN CATCH
     IF @@TRANCOUNT > 0

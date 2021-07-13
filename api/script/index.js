@@ -65,6 +65,21 @@ module.exports = function rule() {
             }).then(function(transformedData) {
                 return { data: transformedData };
             });
+        },
+        'rule.rule.add': async function(msg, $meta) {
+            const {notification, ...result} = await this.bus.importMethod('db/rule.rule.add')(msg, $meta);
+            await this.bus.importMethod('notice.message.push')(notification, $meta);
+            return result;
+        },
+        'rule.rule.edit': async function(msg, $meta) {
+            const {notification, ...result} = await this.bus.importMethod('db/rule.rule.edit')(msg, $meta);
+            await this.bus.importMethod('notice.message.push')(notification, $meta);
+            return result;
+        },
+        'rule.rule.remove': async function(msg, $meta) {
+            const {notification, ...result} = await this.bus.importMethod('db/rule.rule.remove')(msg, $meta);
+            await this.bus.importMethod('notice.message.push')(notification, $meta);
+            return result;
         }
     };
 };

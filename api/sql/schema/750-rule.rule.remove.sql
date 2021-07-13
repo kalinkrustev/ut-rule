@@ -73,6 +73,16 @@ BEGIN TRY
         JOIN
             @conditionId item ON x.conditionId = item.value
     COMMIT TRANSACTION
+    SELECT 'notification' AS resultSetName
+    SELECT
+        rc.priority AS rulePriority,
+        GETDATE() AS creationDateTime,
+        1 AS multicast,
+        'email' AS channel,
+        'rule.delete' AS template
+    FROM
+        [rule].[condition] rc
+    JOIN @conditionId c ON c.value = rc.conditionId
 END TRY
 BEGIN CATCH
     IF @@TRANCOUNT > 0
